@@ -14,6 +14,36 @@ go build -o govulndiff .
 
 Pass one Go binary path. The tool runs `govulncheck` from `PATH` three times, at module, package, and symbol levels. Govulncheck makes requests to the [Go Vulnerability Database at vuln.go.dev](https://go.dev/doc/security/vuln/database) for vulnerability data; this tool does not download or manage a database. The records use the **OSV data format**, which does not mean govulncheck queries the osv.dev website. A scan failure stops the comparison.
 
+### Example
+
+```sh
+$ ./govulndiff extracted/central-symbols 
+GOVULNCHECK SYMBOL INPUT   present
+GO RUNTIME FUNCTION TABLE  present (277994 function names)
+
+MODULE                        VERSION                               VULNERABILITY  SCOPE    EVIDENCE  STATUS
+github.com/nwaples/rardecode  v1.1.3                                GO-2025-4020   module   M/P/S     affected
+github.com/quay/claircore     v1.6.1-0.20260916195820-3902930ff815  GO-2026-5939   module   M/P/S     affected
+golang.org/x/crypto           v0.57.0                               GO-2026-5932   package  M         not_affected
+golang.org/x/net              v0.59.0                               GO-2026-6603   symbol   M/P/S     affected
+golang.org/x/net              v0.59.0                               GO-2026-6610   symbol   M/P/S     affected
+golang.org/x/net              v0.59.0                               GO-2026-6611   symbol   M/P/S     affected
+golang.org/x/net              v0.59.0                               GO-2026-6612   symbol   M/P/S     affected
+golang.org/x/net              v0.59.0                               GO-2026-6617   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6599   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6600   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6603   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6605   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6607   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6608   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6609   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6610   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6611   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6612   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6613   symbol   M/P/S     affected
+stdlib                        v1.26.7                               GO-2026-6617   symbol   M/P/S     affected
+```
+
 ## Extract a binary from an image
 
 The optional `scripts/extract.sh` helper uses `skopeo` to copy a Linux amd64 image and extract one file. It always writes under this repository's `extracted/` directory, keeping the path from the image:
